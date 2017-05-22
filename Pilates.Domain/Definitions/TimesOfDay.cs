@@ -1,0 +1,27 @@
+﻿public enum timesOfDay
+{
+    hour0  = 1,
+    hour1  = 2,
+    hour2  = 4,
+    hour3  = 8,
+    hour4  = 16,
+    hour5  = 32,
+    hour6  = 64,
+    hour7  = 128,
+    hour8  = 256,
+    hour9  = 512,
+    hour10 = 1024,
+    hour11 = 2048,
+    hour12 = 4096,
+    hour13 = 8192,
+    hour14 = 16384,
+    hour15 = 32768,
+    hour16 = 65536,
+    hour17 = 131072,
+    hour18 = 262144,
+    hour19 = 524288,
+    hour20 = 1048576,
+    hour21 = 2097152,
+    hour22 = 4194304,
+    hour23 = 8388608
+}

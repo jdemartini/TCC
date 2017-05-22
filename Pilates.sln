@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Domain", "Pilates.Domain\Pilates.Domain.csproj", "{34885AF6-E586-46EF-B6B7-350F0CD340A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Data", "Pilates.Data\Pilates.Data.csproj", "{03590F68-30EE-47FD-9F3C-BC11465FAED3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.API", "Pilates.API\Pilates.API.csproj", "{896EE6F7-7654-4661-8A65-FC37010DC7BF}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0AA37754-BC31-471F-AC22-D96F3D384F7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34885AF6-E586-46EF-B6B7-350F0CD340A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34885AF6-E586-46EF-B6B7-350F0CD340A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34885AF6-E586-46EF-B6B7-350F0CD340A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34885AF6-E586-46EF-B6B7-350F0CD340A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03590F68-30EE-47FD-9F3C-BC11465FAED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03590F68-30EE-47FD-9F3C-BC11465FAED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03590F68-30EE-47FD-9F3C-BC11465FAED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03590F68-30EE-47FD-9F3C-BC11465FAED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896EE6F7-7654-4661-8A65-FC37010DC7BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896EE6F7-7654-4661-8A65-FC37010DC7BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896EE6F7-7654-4661-8A65-FC37010DC7BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896EE6F7-7654-4661-8A65-FC37010DC7BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA37754-BC31-471F-AC22-D96F3D384F7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA37754-BC31-471F-AC22-D96F3D384F7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA37754-BC31-471F-AC22-D96F3D384F7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
