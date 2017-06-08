@@ -6,3 +6,9 @@ services:
     build:
       context: ./Pilates.API
       dockerfile: Dockerfile
+
+  pilates.account.api:
+    image: pilates.account.api
+    build:
+      context: ./Pilates.Account.API
+      dockerfile: Dockerfile

@@ -25,12 +25,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pilates.Data\Pilates.Data.csproj">
-      <Private>true</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Pilates.Domain\Pilates.Domain.csproj">
-      <Private>true</Private>
-    </ProjectReference>
+    <ProjectReference Include="..\Pilates.Data\Pilates.Agenda.Data.csproj" />
+    <ProjectReference Include="..\Pilates.Domain\Pilates.Agenda.Domain.csproj" />
   </ItemGroup>
 
 </Project>
