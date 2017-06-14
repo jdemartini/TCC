@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace Pilates.Domain.Entities
 {
+
+    /// <summary>
+    /// Represent cancelled class and if it was fully recovered. It is possible to cancel multiple classes as it is possible to recover all.
+    /// </summary>
     public class CancelledClasses : IEntity
     {
         public CancelledClasses()

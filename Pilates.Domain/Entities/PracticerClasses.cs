@@ -4,6 +4,11 @@ using System.Text;
 
 namespace Pilates.Domain.Entities
 {
+    /// <summary>
+    /// Represents when a practicer will have his classes. 
+    /// Practicer can have more than 1 class a week 
+    /// Example: Jos has classes on Mondays, 7AM and Wednesday, 6AM.
+    /// </summary>
     public class PracticerClasses : IEntity
     {
         public PracticerClasses()
@@ -13,7 +18,7 @@ namespace Pilates.Domain.Entities
 
         public Guid? practicerClassesId;
 
-        public Practicer practicer;
+        public Guid practicerId;
 
         public List<Class> classes;
 
