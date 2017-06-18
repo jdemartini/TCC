@@ -19,7 +19,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Agenda.Tests", "Pil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Account.Tests", "Pilates.Account.Tests\Pilates.Account.Tests.csproj", "{AA6FE9C8-E0F2-4822-91FB-FF8CD28976E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Web", "Pilates.Web\Pilates.Web.csproj", "{0F13AA34-4CBB-450A-B361-E1EAED165BF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Messages.Domain", "Pilates.Messages.Domain\Pilates.Messages.Domain.csproj", "{5D793EC8-95DF-489B-BA1B-AADB0C9FB79D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Messages.Data", "Pilates.Messages.Data\Pilates.Messages.Data.csproj", "{BBF2DE77-9160-416D-9180-AC174C7B2185}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Messages.API", "Pilates.Messages.API\Pilates.Messages.API.csproj", "{F86881DE-10A5-4A7B-9278-FE538E55C47E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticWeb", "StaticWeb\StaticWeb.csproj", "{DF277469-E06E-46EC-9690-FE8CBBB70124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +65,22 @@ Global
 		{AA6FE9C8-E0F2-4822-91FB-FF8CD28976E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA6FE9C8-E0F2-4822-91FB-FF8CD28976E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA6FE9C8-E0F2-4822-91FB-FF8CD28976E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F13AA34-4CBB-450A-B361-E1EAED165BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F13AA34-4CBB-450A-B361-E1EAED165BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F13AA34-4CBB-450A-B361-E1EAED165BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F13AA34-4CBB-450A-B361-E1EAED165BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D793EC8-95DF-489B-BA1B-AADB0C9FB79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D793EC8-95DF-489B-BA1B-AADB0C9FB79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D793EC8-95DF-489B-BA1B-AADB0C9FB79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D793EC8-95DF-489B-BA1B-AADB0C9FB79D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF2DE77-9160-416D-9180-AC174C7B2185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF2DE77-9160-416D-9180-AC174C7B2185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF2DE77-9160-416D-9180-AC174C7B2185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF2DE77-9160-416D-9180-AC174C7B2185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F86881DE-10A5-4A7B-9278-FE538E55C47E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F86881DE-10A5-4A7B-9278-FE538E55C47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F86881DE-10A5-4A7B-9278-FE538E55C47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F86881DE-10A5-4A7B-9278-FE538E55C47E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF277469-E06E-46EC-9690-FE8CBBB70124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF277469-E06E-46EC-9690-FE8CBBB70124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF277469-E06E-46EC-9690-FE8CBBB70124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF277469-E06E-46EC-9690-FE8CBBB70124}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

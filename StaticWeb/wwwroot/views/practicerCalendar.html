@@ -1,0 +1,52 @@
+﻿<div ng-controller="practicerCalendarController">
+    <h1>Practicer calendar</h1>
+
+    <md-card>
+        <md-button ng-click="choosingTime();">Choose my time</md-button>
+    </md-card>
+
+    <md-card flex ng-hide="true">
+        <md-card-title >Filters</md-card-title>
+        <md-card-content layout='row'>
+            <md-container flex>
+                <md-select placeholder="Trainer" ng-model="trainer">
+                </md-select>
+            </md-container>
+            <md-container flex>
+                <md-select placeholder="Shift" ng-model="selectedShift">
+                    <md-option ng-value="12">Morning</md-option>
+                    <md-option ng-value="18">Afternoon</md-option>
+                    <md-option ng-value="24">Evening</md-option>
+                </md-select>
+            </md-container>
+            <md-container flex>
+                <md-select placeholder="Days of the week" ng-model="daysOfWeek">
+                    <md-option ng-value="1">Sunday</md-option>
+                    <md-option ng-value="2">Monday</md-option>
+                    <md-option ng-value="3">Tuesday</md-option>
+                    <md-option ng-value="4">Wednesday</md-option>
+                    <md-option ng-value="5">Thursday</md-option>
+                    <md-option ng-value="6">Friday</md-option>
+                    <md-option ng-value="7">Saturday</md-option>
+                </md-select>
+            </md-container>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-event-calendar ng-model="selected"
+                            md-events="events"
+                            md-event-click="eventClicked($selectedEvent)"
+                            md-label="title" ,
+                            md-show-create-link="true"
+                            md-create-event-click="eventCreatea($date)"
+                            md-create-disabled="true"
+                            auto-height=""
+                            class="md-primary">
+            <md-event-calendar-header class="md-center">
+                <md-event-calendar-prev></md-event-calendar-prev>
+                <md-event-calendar-title></md-event-calendar-title>
+                <md-event-calendar-next></md-event-calendar-next>
+            </md-event-calendar-header>
+        </md-event-calendar>
+    </md-card>
+</div>

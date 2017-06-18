@@ -1,0 +1,30 @@
+﻿<md-dialog aria-label="Choose time" flex>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Choose your time</h2>
+                
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-card>
+            <md-list>
+                <md-list-item ng-repeat="class in ctrl.practicerClasses">
+                    <md-item-content layout="row" layout-align="start center">
+                        {{class.dayOfWeek}} - {{class.time}}:00 - {{class.trainerName}}
+                    </md-item-content>
+                </md-list-item>
+            </md-list>
+            Select your time:
+            <md-select ng-model="selectedClass" placeholder="Select your class">
+                <md-option ng-repeat="class in ctrl.availableClasses">
+                    {{class.dayOfWeek}} - {{class.time}} - {{class.trainerName}}
+                </md-option>
+            </md-select>
+            <md-button ng-click="ctrl.addClass();">Add</md-button>
+        </md-card>
+        <md-card>
+            <md-button ng-click="ctrl.cancel()">Close</md-button>
+        </md-card>
+    </form>
+</md-dialog>

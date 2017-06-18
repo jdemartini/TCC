@@ -1,0 +1,21 @@
+{
+  "name": "angular-route",
+  "version": "1.6.4-build.5322+sha.d96e58f",
+  "license": "MIT",
+  "main": "./angular-route.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.6.4-build.5322+sha.d96e58f"
+  },
+  "homepage": "https://github.com/angular/bower-angular-route",
+  "_release": "1.6.4-build.5322+sha.d96e58f",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.6.4-build.5322+sha.d96e58f",
+    "commit": "e81d9b9e90385640220d2cd30ec0fbd5688c5c30"
+  },
+  "_source": "https://github.com/angular/bower-angular-route.git",
+  "_target": "v1.6.4-build.5322+sha.d96e58f",
+  "_originalSource": "angular-route",
+  "_direct": true
+}

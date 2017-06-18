@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html ng-app="PilatesApp">
+<head>
+    <meta charset="utf-8" />
+
+    <link href="lib/angular-material/angular-material.css" rel="stylesheet" />
+    <link href="lib/angular-material-event-calendar/dist/angular-material-event-calendar.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    
+    <title>Pilates</title>
+</head>
+<body layout="row" ng-controller="PilatesCtrl" ng-cloak>
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md') " flex>
+        <md-toolbar class="md-tall md-hue-2">
+            
+            <span flex></span>
+            <div layout="column" class="md-toolbar-tools-bottom inset">
+                <user-avatar></user-avatar>
+                <span></span>
+                <div>{{user.name}}</div>
+                <div>{{user.studioName}}</div>
+            </div>
+        </md-toolbar>
+        <md-menu-content >
+            <md-subheader>Login as</md-subheader>
+            <md-menu-item ng-repeat="item in menu" >
+                <md-button ng-click="showLogin(item, $event)">
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                        </div>
+                        <div class="inset">
+                            {{item.title}}
+                        </div>
+                    </md-item-content>
+                </md-button> 
+            </md-menu-item>
+            <md-divider></md-divider>
+            <md-subheader>Management</md-subheader>
+            <md-menu-item ng-repeat="item in admin" ng-click="showForm(item, $event)">
+                <md-button>
+                    <md-item-content md-ink-ripple layout="row" layout-align="start center">
+                        <div class="inset">
+                            <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                        </div>
+                        <div class="inset">
+                            {{item.title}}
+                        </div>
+                </md-item-content>
+                </md-button> 
+            </md-menu-item>
+        </md-menu-content>
+    </md-sidenav>
+    
+    <md-content id="content" flex>
+        <div  ng-view>
+
+        </div>
+
+    </md-content>
+
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-aria/angular-aria.js"></script>
+    <script src="lib/angular-material/angular-material.min.js"></script>
+    <script src="lib/angular-material-event-calendar/dist/angular-material-event-calendar.js"></script>
+    <script src="lib/angular-route/angular-route.min.js"></script>
+    <script src="lib/lodash/lodash.js"></script>
+    <script src="lib/moment/min/moment.min.js"></script>
+
+    <script src="js/site.js"></script>
+
+    <!--services-->
+    <script src="js/Services/LoginService.js"></script>
+    <script src="js/Services/TrainerService.js"></script>
+    <script src="js/Services/PracticerService.js"></script>
+
+    <!--controllers-->
+    <script src="js/Controllers/TrainerScheduleController.js"></script>
+    <script src="js/Controllers/practicerCalendarController.js"></script>
+    <script src="js/Controllers/TrainerController.js"></script>
+    <script src="js/Controllers/PracticerController.js"></script>
+    <script src="js/Controllers/loginController.js"></script>
+    <script src="js/Controllers/MainController.js"></script>
+</body>
+</html>

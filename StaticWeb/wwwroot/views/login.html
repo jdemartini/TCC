@@ -1,0 +1,24 @@
+﻿<md-dialog aria-label="Trainer CRUD" ng-controller="loginController">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Login</h2>
+                <span flex></span>
+                
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-card>
+                <md-list flex>
+                    <md-list-item ng-repeat="user in users">
+                        <md-button ng-click="performLogin(user);">
+                            <user-avatar></user-avatar>
+                            <h3>{{user.name}}</h3>
+                        </md-button>
+                    </md-list-item>
+                </md-list>
+                
+            </md-card>
+        </md-content>
+    </form>
+</md-dialog>

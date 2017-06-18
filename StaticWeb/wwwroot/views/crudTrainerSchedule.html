@@ -1,0 +1,38 @@
+﻿<md-dialog >
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Trainer schedule</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-content layout="row" flex>
+            <md-card>
+                <md-input-container>
+                    <md-title>Day of the Week</md-title>
+                    <div ng-repeat="days in ctrl.daysOfWeek" layout="column" flex>
+                        <md-checkbox ng-click="ctrl.toggle(days, ctrl.selectedDaysOfWeek)">{{days}}</md-checkbox>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <md-title>Hours</md-title>
+                    <div ng-repeat="hour in ctrl.hours">
+                        <md-checkbox ng-click="ctrl.toggle(hour, ctrl.selectedHours)">{{hour}}:00</md-checkbox>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Day begin</label>
+                    <input ng-model="ctrl.schedule.dateBegin" type="date" placeholder="Date when this schedule will be available" />
+                </md-input-container>
+                <md-input-container>
+                    <label>Day end</label>
+                    <input ng-model="ctrl.schedule.dateEnd" type="date" placeholder="Date when this schedule won't be valid anymore'" />
+                </md-input-container>
+                <md-container>
+                    <md-button ng-click="ctrl.cancelTrainerSchedule()">Cancel</md-button>
+                    <md-button ng-click="ctrl.saveTrainerSchedule()">Save</md-button>
+                </md-container>
+            </md-card>
+        </md-content>
+    </form>
+</md-dialog>

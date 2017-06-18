@@ -6,5 +6,7 @@ namespace Pilates.Account.Domain.Entities
 {
     public class Practicer : User
     {
+        public int classesPerWeek;
+
     }
 }

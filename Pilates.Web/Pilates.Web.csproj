@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <None Include="wwwroot\main.html" />
+    <None Include="wwwroot\Scripts\AccountService.js" />
+    <None Include="wwwroot\Scripts\AgendaService.js" />
+    <None Include="wwwroot\Scripts\MainController.js" />
+    <None Include="wwwroot\Scripts\MessagesService.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Angular.Material" Version="1.1.4" />

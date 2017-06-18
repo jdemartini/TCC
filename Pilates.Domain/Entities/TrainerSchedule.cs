@@ -15,9 +15,13 @@ namespace Pilates.Domain.Entities
 
         public DayOfWeek daysOfWeek;
 
-        public uint timesOfDay;
+        public uint[] timesOfDay;
 
         public UInt16 timeMinutesBegin;
+
+        public DateTime dayBegin;
+
+        public DateTime? dayEnd;
 
         public uint maxNumberOfTrainers;
        

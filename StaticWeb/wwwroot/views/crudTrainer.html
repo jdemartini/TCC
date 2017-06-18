@@ -1,0 +1,36 @@
+﻿<md-dialog aria-label="Trainer CRUD" ng-controller="trainerController">
+    <form >
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Trainer</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content layout="row" flex>
+            <md-card>
+                <md-input-container>
+                    <label>Fullname</label>
+                    <input ng-model="newTrainer.name" placeholder="Fullname" />
+                </md-input-container>
+                <md-input-container>
+                    <label>Email</label>
+                    <input ng-model="newTrainer.email" type="email" placeholder="Email address" />
+                </md-input-container>
+                <md-input-container>
+                    <label>Phone</label>
+                    <input ng-model="newTrainer.phone" type="text" placeholder="Phone number" />
+                </md-input-container>
+                <md-input-container>
+                    <label>Born date</label>
+                    <input ng-model="newTrainer.bornDate" type="date" placeholder="Born date" />
+                </md-input-container>
+                <md-container>
+                    <md-button ng-click="cancelTrainer()">Cancel</md-button>
+                    <md-button ng-click="saveTrainer()">Save</md-button>
+                </md-container>
+            </md-card>
+        </md-content>
+    </form>
+</md-dialog>

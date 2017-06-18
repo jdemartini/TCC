@@ -6,5 +6,6 @@ namespace Pilates.Account.Domain.Entities
 {
     public class Trainer : User
     {
+
     }
 }
