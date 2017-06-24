@@ -11,14 +11,26 @@ app.controller('practicerCalendarController', ['$scope', '$mdBottomSheet', '$mdS
                 loginService.setLoginAs({
                     link: 'views/crudPracticer.html',
                     title: 'Add practicer',
-                    icon: 'trainer'
+                    icon: 'practicer'
                 });
+                $scope.showPracticerSchedule();
                 
             });
+        } else
+        {
+            $scope.showPracticerSchedule();
         }
         $scope.practicerClasses = [];
         $scope.selectedClass = {};
 
+        $scope.daysOfWeek = [];
+        $scope.daysOfWeek[0] = 'Sunday'
+        $scope.daysOfWeek[1] = 'Monday'
+        $scope.daysOfWeek[2] = 'Tuesday'
+        $scope.daysOfWeek[3] = 'Wednesday'
+        $scope.daysOfWeek[4] = 'Thursday'
+        $scope.daysOfWeek[5] = 'Friday'
+        $scope.daysOfWeek[6] = 'Saturday'
         
         loadAvailableClasses();
         
@@ -51,7 +63,18 @@ app.controller('practicerCalendarController', ['$scope', '$mdBottomSheet', '$mdS
     }
 
     $scope.addClass = function () {
+        if (_.isNil($scope.selectedClass) === false &&
+            _.indexOf($scope.practicerClasses, $scope.selectedClass) < 0)
+            $scope.practicerClasses.push($scope.selectedClass);
+        $scope.selectedClass = null;
+    }
 
+    $scope.removeClass = function (cls) {
+        var index = _.indexOf($scope.practicerClasses, cls);
+        if (index >= 0)
+            _.remove($scope.practicerClasses, function (clsTemp) {
+                return cls === clsTemp;
+            });
     }
 
     $scope.toggle = function (item, list) {
@@ -110,41 +133,46 @@ app.controller('practicerCalendarController', ['$scope', '$mdBottomSheet', '$mdS
     $scope.cancel = function () {
         $mdDialog.hide();
     }
-
+    
     $scope.savePracticerClass = function () {
         if (_.lowerCase(loginService.getLoginAs().icon) == 'practicer' &&
             _.isNil(loginService.getLoggedUser()) == false) {
-            _.forEach($scope.selectedDaysOfWeek, function (day) {
+            var practicerData = {
+                practicerId: loginService.getLoggedUser().id,
+                classes: []
+            }
+            _.forEach($scope.practicerClasses, function (cls) {
                 var data = {
-                    practicerId: loginService.getLoggedUser().id,
-                    dayOfWeek: day,
-                    timesOfDay: $scope.selectedHours,
-                    timeMinutesToBegin: 0,
-                    maxNumberOfTrainers: 2,
-                    dayBegin: $scope.schedule.dateBegin,
-                    dayEnd: $scope.schedule.dateEnd,
+                    trainerId: cls.trainerId,
+                    dayBegin: moment().toDate(),
+                    dayEnd: moment().add(1, 'year').toDate(),
+                    dayOfWeek: cls.dayOfWeek,
+                    timeOfDay: cls.time
                 }
-                trainerService.addTrainerSchedule(data);
+                practicerData.classes.push(data)
+                
             });
-            $scope.showTrainerSchedule();
+            practicerService.savePracticerClasses(practicerData).then(function (result) {
+                $scope.showPracticerSchedule();
+            });
             $mdDialog.hide();
         }
     }
 
-    $scope.showTrainerSchedule = function () {
-        trainerService.getTrainerSchedule(loginService.getLoggedUser().id).then(function (trainerSchedule) {
-            $scope.trainerClasses = [];
-            _.forEach(trainerSchedule, function (daySchedule) {
+    $scope.showPracticerSchedule = function () {
+        practicerService.getPracticerSchedule(loginService.getLoggedUser().id).then(function (practicerSchedule) {
+            $scope.practicerCalendarSchedule = [];
+            _.forEach(practicerSchedule, function (pSchedule) {
+                _.forEach(pSchedule.classes, function (daySchedule) {
 
-                var firstDay = findFirstAfter(daySchedule.dayBegin, daySchedule.dayOfWeek);
-                while (firstDay < daySchedule.dayEnd || firstDay < moment().add(1, 'years')) {
-                    for (var j = 0; j < daySchedule.timesOfDay.length; j++) {
+                    var firstDay = findFirstAfter(daySchedule.dayBegin, daySchedule.dayOfWeek);
+                    while (firstDay < daySchedule.dayEnd || firstDay < moment().add(1, 'years')) {
                         var start = moment(firstDay);
-                        start.set({ hour: daySchedule.timesOfDay[j], minute: 0 });
+                        start.set({ hour: daySchedule.timeOfDay, minute: 0 });
                         var end = moment(firstDay);
-                        end.set({ hour: daySchedule.timesOfDay[j] + 1, minute: 0 });
+                        end.set({ hour: daySchedule.timeOfDay + 1, minute: 0 });
 
-                        $scope.trainerClasses.push(createCalendarEvent(
+                        $scope.practicerCalendarSchedule.push(createCalendarEvent(
                             loginService.getLoggedUser().name,
                             start.toDate(),
                             end.toDate(),
@@ -152,9 +180,9 @@ app.controller('practicerCalendarController', ['$scope', '$mdBottomSheet', '$mdS
                         ));
 
 
+                        firstDay = moment(firstDay).add(7, 'days');
                     }
-                    firstDay = moment(firstDay).add(7, 'days');
-                }
+                });
             });
         });
     }
@@ -164,7 +192,7 @@ app.controller('practicerCalendarController', ['$scope', '$mdBottomSheet', '$mdS
 
         for (var i = 0; i < 7; i++) {
             afterThis = moment(afterThis).add(1, 'days');
-            if (afterThis.isoWeekday() == $scope.daysOfWeek.indexOf(thisWeekDay)) {
+            if (afterThis.isoWeekday() == thisWeekDay) {
                 result = moment(afterThis);
                 break;
             }

@@ -14,16 +14,14 @@ namespace Pilates.Domain.Entities
         public Guid? id { get; set; }
 
         public Guid trainerId;
-
-        public int maxPracticerSpots;
         
-        public DateTime dateBegin;
+        public DateTime dayBegin;
 
-        public DateTime dateFinish;
+        public DateTime dayEnd;
 
         public DayOfWeek dayOfWeek;
 
-        public TimeSpan timeOfDay;
+        public UInt16 timeOfDay;
         
     }
 }

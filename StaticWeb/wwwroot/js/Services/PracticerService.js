@@ -6,6 +6,7 @@ app.service('practicerService', ['$http', '$q', function ($http, $q) {
     var me = this;
     me.initialize = function() {
         me.practicer = [];
+        me.practicerClasses = [];
 
         /*me.practicer.push({
             id: '132456',
@@ -92,8 +93,43 @@ app.service('practicerService', ['$http', '$q', function ($http, $q) {
         return defer.promise;
     }
 
-    me.getPracticerSchedule = function (practicer) {
+    me.savePracticerClasses = function (data) {
+        var defer = $q.defer()
 
+        $http.post(
+            agendaUrl + '/PracticerClasses/',
+            data
+        ).then(function successCallback(response) {
+            if (_.isNil(response.data) === false) {
+                practicerClasses.push(response.data.classes);
+            }
+
+            defer.resolve(data);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
+
+
+        return defer.promise;
+    }
+
+    me.getPracticerSchedule = function (practicerId) {
+        var defer = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: agendaUrl + '/PracticerClasses/',
+        }).then(function successCallback(response) {
+            if (_.isNil(response.data) === false) { 
+                me.practicerClasses = response.data;
+            }
+            defer.resolve(_.filter(me.practicerClasses, function (practicerSchedule) {
+                return practicerSchedule.practicerId == practicerId;
+            }));
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
+        return defer.promise;
     }
     
     me.initialize();
