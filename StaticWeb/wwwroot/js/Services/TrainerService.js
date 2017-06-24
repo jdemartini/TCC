@@ -3,7 +3,7 @@
 app.service('trainerService', ['$http', '$q', function ($http, $q) {
     var me = this;
     var accountUrl = 'http://localhost:51014/api/Trainer';
-    var agendaUrl = 'http://localhost:54250/api';
+    var agendaUrl = 'http://localhost:54250/api/TrainerSchedule';
     me.initialize = function() {
         me.trainers = [];
         /*
@@ -83,18 +83,40 @@ app.service('trainerService', ['$http', '$q', function ($http, $q) {
 
     me.getTrainerSchedule = function (trainerId) {
         var defer = $q.defer();
-        setTimeout(function () {
+
+        $http({
+            method: 'GET',
+            url: agendaUrl
+        }).then(function successCallback(response) {
+            if (_.isNil(response.data) === false)
+                me.trainerSchedule = response.data;
             defer.resolve(_.filter(me.trainerSchedule, function (trainerSchedule) {
                 return trainerSchedule.trainerId == trainerId;
             }));
-
-        }, 500);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
         return defer.promise;
     }
 
     me.addTrainerSchedule = function (trainerSchedule) {
-        me.trainerSchedule.push(trainerSchedule);
-        return me.getTrainerSchedule(trainerSchedule.trainerId); 
+        var defer = $q.defer()
+
+        $http.post(
+            agendaUrl,
+            trainerSchedule
+        ).then(function successCallback(response) {
+            if (_.isNil(response.data) === false)
+                me.trainerSchedule.push(trainerSchedule);
+
+            defer.resolve(trainerSchedule);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
+
+
+        return defer.promise;
+
     }
 
     

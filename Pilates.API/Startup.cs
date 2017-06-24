@@ -23,7 +23,6 @@ namespace Pilates.API
             Configuration = builder.Build();
         }
         
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public virtual void ConfigureServices(IServiceCollection services)
         {
@@ -53,7 +52,8 @@ namespace Pilates.API
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+            app.UseCors("SiteCorsPolicy");
+
             app.UseMvc();
 
             if (env.IsDevelopment())
@@ -67,7 +67,7 @@ namespace Pilates.API
 
             app.UseStaticFiles();
 
-            app.UseCors("SiteCorsPolicy");
+
                        
         }
     }

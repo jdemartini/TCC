@@ -6,7 +6,7 @@ namespace Pilates.Domain.Entities
 {
     public class Schedule : IEntity
     {
-        public Guid? scheduleId;
+        public Guid? id { get; set; }
 
         public DateTime begin;
 
@@ -15,15 +15,6 @@ namespace Pilates.Domain.Entities
         public DayOfWeek dayOfWeek;
 
         public UInt32 timesOfDay;
-
-        public Guid? getId()
-        {
-            return this.scheduleId;
-        }
-
-        public void setId(Guid id)
-        {
-            this.scheduleId = id;
-        }
+        
     }
 }

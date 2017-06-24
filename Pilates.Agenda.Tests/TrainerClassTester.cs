@@ -33,7 +33,7 @@ namespace Pilates.Agenda.Tests
         {
             await controller.Post(new TrainerSchedule()
             {
-                daysOfWeek = DayOfWeek.Monday,
+                dayOfWeek = DayOfWeek.Monday,
                 maxNumberOfTrainers = 3,
                 timeMinutesBegin = 0,
                 timesOfDay = new uint[] { 7, 8, 9, 10, 11, 12 },
@@ -74,7 +74,7 @@ namespace Pilates.Agenda.Tests
 
             var data = await this.controller.Put(this.trainerScheduleId, new TrainerSchedule()
             {
-                daysOfWeek = DayOfWeek.Monday,
+                dayOfWeek = DayOfWeek.Monday,
                 maxNumberOfTrainers = 3,
                 timeMinutesBegin = 0,
                 timesOfDay = new uint[] { 7, 8, 9, 10, 11, 12 },

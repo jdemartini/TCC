@@ -15,22 +15,12 @@ namespace Pilates.Domain.Entities
         {
             this.classes = new List<Class>();
         }
-
-        public Guid? practicerClassesId;
+        public Guid? id { get; set; }
 
         public Guid practicerId;
 
         public List<Class> classes;
 
-        public Guid? getId()
-        {
-            return this.practicerClassesId;
-        }
-
-        public void setId(Guid id)
-        {
-            this.practicerClassesId = id;
-        }
-
+       
     }
 }

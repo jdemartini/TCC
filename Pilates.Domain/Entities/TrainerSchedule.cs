@@ -7,13 +7,13 @@ namespace Pilates.Domain.Entities
     /// <summary>
     /// Represent classes of a trainer. Definition of times of a class and the day of week and it happens.
     /// </summary>
-    public class TrainerSchedule : IEntity    
+    public class TrainerSchedule : IEntity
     {
-        public Guid? trainerScheduleId;
+        public Guid? id { get; set; }
 
         public Guid trainerId;
 
-        public DayOfWeek daysOfWeek;
+        public DayOfWeek dayOfWeek;
 
         public uint[] timesOfDay;
 
@@ -25,14 +25,6 @@ namespace Pilates.Domain.Entities
 
         public uint maxNumberOfTrainers;
        
-        public Guid? getId()
-        {
-            return this.trainerScheduleId;
-        }
-
-        public void setId(Guid id)
-        {
-            this.trainerScheduleId = id;
-        }
+     
     }       
 }

@@ -14,7 +14,7 @@ namespace Pilates.Domain.Entities
             this.recoveredClasses = new List<Class>();
         }
 
-        public Guid? cancelledClassesId;
+        public Guid? id { get; set; }
 
         public PracticerClasses practicerClasses;
 
@@ -28,14 +28,6 @@ namespace Pilates.Domain.Entities
 
         public List<Class> recoveredClasses;
 
-        public Guid? getId()
-        {
-            return this.cancelledClassesId;
-        }
-
-        public void setId(Guid id)
-        {
-            this.cancelledClassesId = id;
-        }
+        
     }
 }

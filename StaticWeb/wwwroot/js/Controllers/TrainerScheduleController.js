@@ -12,11 +12,11 @@ app.controller('trainerScheduleController', ['$scope', '$mdBottomSheet', '$mdSid
                     title: 'Add trainer',
                     icon: 'trainer'
                 });
-                $scope.showTrainerSchedule();
+                $scope.loadTrainerSchedule();
             });
         }
         else {
-            $scope.showTrainerSchedule();
+            $scope.loadTrainerSchedule();
         }
 
         $scope.trainerClasses = [];
@@ -37,9 +37,14 @@ app.controller('trainerScheduleController', ['$scope', '$mdBottomSheet', '$mdSid
         $scope.selectedDaysOfWeek = [];
 
         $scope.schedule = {};
-
+        loginService.subscribeLoginEvent($scope.loginEvent);
+        me.loadingTrainerSchedule = false;
         
     };
+
+    $scope.loginEvent = function (user) {
+        $scope.loadTrainerSchedule();
+    }
 
     $scope.toggle = function (item, list) {
         var idx = list.indexOf(item);
@@ -99,46 +104,55 @@ app.controller('trainerScheduleController', ['$scope', '$mdBottomSheet', '$mdSid
             _.forEach($scope.selectedDaysOfWeek, function (day) {
                 var data = {
                     trainerId: loginService.getLoggedUser().id,
-                    dayOfWeek: day,
+                    dayOfWeek: _.indexOf($scope.daysOfWeek, day),
                     timesOfDay: $scope.selectedHours,
                     timeMinutesToBegin: 0,
                     maxNumberOfTrainers: 2,
                     dayBegin: $scope.schedule.dateBegin,
                     dayEnd: $scope.schedule.dateEnd,
                 }
-                trainerService.addTrainerSchedule(data);
+                trainerService.addTrainerSchedule(data).then(function (r) {
+                    $scope.loadTrainerSchedule();
+                });
             });
-            $scope.showTrainerSchedule();
+
             $mdDialog.hide();
         }
     }
 
-    $scope.showTrainerSchedule = function () {
-        trainerService.getTrainerSchedule(loginService.getLoggedUser().id).then(function (trainerSchedule) {
-            $scope.trainerClasses = [];
-            _.forEach(trainerSchedule, function (daySchedule) {
-                
-                var firstDay = findFirstAfter(daySchedule.dayBegin, daySchedule.dayOfWeek);
-                while (firstDay < daySchedule.dayEnd || firstDay < moment().add(1, 'years')) {
-                    for (var j = 0; j < daySchedule.timesOfDay.length; j++) {
-                        var start = moment(firstDay);
-                        start.set({ hour: daySchedule.timesOfDay[j], minute: 0 });
-                        var end = moment(firstDay);
-                        end.set({ hour: daySchedule.timesOfDay[j] + 1, minute: 0 });
+    $scope.loadTrainerSchedule = function () {
+        if (me.loadingTrainerSchedule)
+            return;
+        me.loadingTrainerSchedule = true;
+        trainerService.getTrainerSchedule(loginService.getLoggedUser().id)
+            .then(function (trainerSchedule) {
+                $scope.trainerClasses = [];
+                _.forEach(trainerSchedule, function (daySchedule) {
 
-                        $scope.trainerClasses.push(createCalendarEvent(
-                            loginService.getLoggedUser().name,
-                            start.toDate(),
-                            end.toDate(),
-                            false
-                        ));
-                        
+                    var firstDay = findFirstAfter(daySchedule.dayBegin, daySchedule.dayOfWeek);
+                    while (firstDay < daySchedule.dayEnd || firstDay < moment().add(1, 'years')) {
+                        for (var j = 0; j < daySchedule.timesOfDay.length; j++) {
+                            var start = moment(firstDay);
+                            start.set({ hour: daySchedule.timesOfDay[j], minute: 0 });
+                            var end = moment(firstDay);
+                            end.set({ hour: daySchedule.timesOfDay[j] + 1, minute: 0 });
 
+                            $scope.trainerClasses.push(createCalendarEvent(
+                                loginService.getLoggedUser().name,
+                                start.toDate(),
+                                end.toDate(),
+                                false
+                            ));
+
+
+                        }
+                        firstDay = moment(firstDay).add(7, 'days');
                     }
-                    firstDay = moment(firstDay).add(7, 'days');
-                }
+                })
+                me.loadingTrainerSchedule = false;
+            }).then(function (fail) {
+                me.loadingTrainerSchedule = false;
             });
-        });
     }
 
     findFirstAfter = function (afterThis, thisWeekDay)
@@ -147,7 +161,7 @@ app.controller('trainerScheduleController', ['$scope', '$mdBottomSheet', '$mdSid
 
         for (var i = 0; i < 7; i++) {
             afterThis = moment(afterThis).add(1, 'days');
-            if (afterThis.isoWeekday() == $scope.daysOfWeek.indexOf(thisWeekDay)) {
+            if (afterThis.isoWeekday() == thisWeekDay) {
                 result = moment(afterThis);
                 break;
             }

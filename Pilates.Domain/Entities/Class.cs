@@ -11,8 +11,8 @@ namespace Pilates.Domain.Entities
     /// </summary>
     public class Class : IEntity
     {
-        public Guid? classId;
-        
+        public Guid? id { get; set; }
+
         public Guid trainerId;
 
         public int maxPracticerSpots;
@@ -24,15 +24,6 @@ namespace Pilates.Domain.Entities
         public DayOfWeek dayOfWeek;
 
         public TimeSpan timeOfDay;
-
-        public Guid? getId()
-        {
-            return this.classId;
-        }
-
-        public void setId(Guid id)
-        {
-            this.classId = id;
-        }
+        
     }
 }

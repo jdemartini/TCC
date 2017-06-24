@@ -26,14 +26,14 @@ namespace Pilates.Data.Repos
 
         public virtual async Task<TEntity> Add(TEntity model)
         {
-            model.setId(Guid.NewGuid());
+            model.id = Guid.NewGuid();
             await collection.InsertOneAsync(model);
             return model;
         }
 
         public virtual async Task<TEntity> Update(Guid id, TEntity model)
         {
-            var res = await collection.ReplaceOneAsync((e => e.getId() == id), model);
+            var res = await collection.ReplaceOneAsync((e => e.id == id), model);
             
             return model;
         }
@@ -49,7 +49,7 @@ namespace Pilates.Data.Repos
         public virtual Task<TEntity> GetById(Guid id)
         {
             var data = collection.Find(
-                p => p.getId() == id).FirstOrDefaultAsync();
+                p => p.id == id).FirstOrDefaultAsync();
 
             return data;
         }
@@ -58,14 +58,14 @@ namespace Pilates.Data.Repos
         {
             var options = new UpdateOptions { IsUpsert = true };
             var results = from item in itemList
-                          select collection.ReplaceOneAsync(model => model.getId() == item.getId(), item, options);
+                          select collection.ReplaceOneAsync(model => model.id == item.id, item, options);
             return Task.WhenAll(results);
         }
 
         public virtual async Task<bool> Delete(Guid modelId)
         {
             var result = await collection.DeleteOneAsync(
-                p => p.getId() == modelId);
+                p => p.id == modelId);
 
             return result.DeletedCount > 0;
         }
