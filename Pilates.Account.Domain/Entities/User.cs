@@ -6,7 +6,7 @@ namespace Pilates.Account.Domain.Entities
 {
     public class User : IEntity
     {
-        public Guid id;
+        public Guid? id { get; set; }
         public string name;
         public string email;
         public string phone;

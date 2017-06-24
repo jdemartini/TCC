@@ -77,7 +77,7 @@ namespace Pilates.Agenda.Tests
                 daysOfWeek = DayOfWeek.Monday,
                 maxNumberOfTrainers = 3,
                 timeMinutesBegin = 0,
-                timesOfDay = 7 & 8 & 9 & 10 & 11 & 12,
+                timesOfDay = new uint[] { 7, 8, 9, 10, 11, 12 },
                 trainerId = Guid.NewGuid(),
                 trainerScheduleId = this.trainerScheduleId
             });

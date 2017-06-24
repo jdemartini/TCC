@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,9 +28,22 @@ namespace Pilates.API
         public virtual void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
-            //services.AddScoped(typeof(IRepositoryBase<IEntity>), typeof(RepositoryBase<IEntity>));
-            //services.AddTransient(typeof(IRepositoryBase<IEntity>), typeof(RepositoryBase<IEntity>));
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling =
+                                                            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            // ********************
+            // Setup CORS
+            // ********************
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin(); // For anyone access.
+            corsBuilder.AllowCredentials();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
 
         }
@@ -53,18 +67,8 @@ namespace Pilates.API
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-            routes.MapRoute(
-                name: "default",
-                //template: "{controller=Home}/{action=Index}/{id?}");
-                template: "api/{controller}"
-                //,defaults: new { id = Parameter.Optional }
-                );
-
-            
-            });
+            app.UseCors("SiteCorsPolicy");
+                       
         }
-
     }
 }

@@ -26,6 +26,7 @@ namespace Pilates.Data.Repos
 
         public virtual async Task<TEntity> Add(TEntity model)
         {
+            model.setId(Guid.NewGuid());
             await collection.InsertOneAsync(model);
             return model;
         }

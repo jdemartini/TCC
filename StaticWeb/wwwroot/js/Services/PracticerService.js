@@ -1,11 +1,13 @@
 ﻿var app = angular.module('PilatesApp');
 
 app.service('practicerService', ['$http', '$q', function ($http, $q) {
+    var accountUrl = 'http://localhost:51014/api';
+    var agendaUrl = 'http://localhost:54250/api';
     var me = this;
     me.initialize = function() {
         me.practicer = [];
 
-        me.practicer.push({
+        /*me.practicer.push({
             id: '132456',
             name: 'Cris',
             email: 'cris@gmail.com',
@@ -26,21 +28,23 @@ app.service('practicerService', ['$http', '$q', function ($http, $q) {
             phone: '5199999999',
             studioName: 'Zenfit'
         });
-
+        */
         me.trainerSchedule = [];
-        me.populatePracticerSchedule();
     }
 
     me.getPracticers = function () {
         var defer = $q.defer()
 
-        setTimeout(function () {
-            if (me.practicer.length > 0)
-                defer.resolve(me.practicer);
-            else {
-                defer.reject(me.practicer);
-            }
-        }, 500);
+        $http({
+            method: 'GET',
+            url: accountUrl + '/practicer'
+        }).then(function successCallback(response) {
+            if (_.isNil(response.data) === false)
+                me.practicer = response.data;
+            defer.resolve(me.practicer);
+            }, function errorCallback(response) {
+                defer.reject(response);
+        });
         
         return defer.promise;
     }
@@ -48,34 +52,42 @@ app.service('practicerService', ['$http', '$q', function ($http, $q) {
     me.addPracticer = function (newPracticer) {
         var defer = $q.defer()
 
-        setTimeout(function () {
-            if (_.isNil(me.practicer)) {
-                me.practicer = []
-                defer.resolve(me.practicer);
-            }
-
-            newPracticer.id = _.random(100000, 999999);
-            me.practicer.push(newPracticer);
-
-        }, 500);
+        $http.post(
+            accountUrl + '/practicer',
+            newPracticer
+        ).then(function successCallback(response) {
+            if (_.isNil(response) === false)
+                me.practicer.push(response.data);
+                
+            defer.resolve(me.practicer);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
 
         return defer.promise;
     }
 
     me.getPracticer = function (id) {
         var defer = $q.defer()
-
-        setTimeout(function () {
-            if (_.isNil(me.practicer)) {
-                defer.resolve(null);
-            }
-            var index = _.findIndex(me.practicer, function (t) { return t.id = id; });
-            if (index >= 0) {
-                defer.resolve(me.practicer[index]);
-            }
-            defer.resolve(null);
-
-        }, 500);
+        var index = _.findIndex(me.practicer, function (t) { return t.id = id; });
+        if (index < 0) {
+            $http({
+                method: 'GET',
+                url: accountUrl + '/practicer/' + id
+            }).then(function successCallback(response) {
+                if (_.isNil(response.data) === false) {
+                    me.practicer.push(data);
+                    defer.resolve(response.data);
+                }
+                defer.reject(me.practicer);
+            }, function errorCallback(response) {
+                defer.reject(response);
+            });
+        }
+        else {
+            defer.resolve(me.practicer[index]);
+        }
+        defer.resolve(null);
 
         return defer.promise;
     }
@@ -83,11 +95,7 @@ app.service('practicerService', ['$http', '$q', function ($http, $q) {
     me.getPracticerSchedule = function (practicer) {
 
     }
-
-    me.populatePracticerSchedule = function () {
-
-    }
-
+    
     me.initialize();
 
 }])

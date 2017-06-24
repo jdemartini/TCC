@@ -6,5 +6,6 @@ namespace Pilates.Account.Domain.Entities
 {
     public interface IEntity
     {
+        Guid? id { get; set; }
     }
 }

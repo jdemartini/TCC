@@ -2,9 +2,11 @@
 
 app.service('trainerService', ['$http', '$q', function ($http, $q) {
     var me = this;
+    var accountUrl = 'http://localhost:51014/api/Trainer';
+    var agendaUrl = 'http://localhost:54250/api';
     me.initialize = function() {
         me.trainers = [];
-
+        /*
         me.trainers.push({
             id: '132456',
             name: 'Eduardo',
@@ -12,52 +14,43 @@ app.service('trainerService', ['$http', '$q', function ($http, $q) {
             phone: '5199999999',
             studioName: 'Zenfit'
         });
-        me.trainers.push({
-            id: '132457',
-            name: 'Renata',
-            email: 'renata@studio.com',
-            phone: '5199999999',
-            studioName: 'Zenfit'
-        });
-        me.trainers.push({
-            id: '132458',
-            name: 'Iza',
-            email: 'iza@studio.com',
-            phone: '5199999999',
-            studioName: 'Zenfit'
-        });
-
+       
+        */
         me.trainerSchedule = [];
-        me.populateTrainerSchedule();
     }
 
     me.getTrainers = function () {
         var defer = $q.defer()
 
-        setTimeout(function () {
-            if (me.trainers.length > 0)
-                defer.resolve(me.trainers);
-            else {
-                defer.reject(me.trainers);
-            }
-        }, 1000);
-        
+        $http({
+            method: 'GET',
+            url: accountUrl
+        }).then(function successCallback(response) {
+            if (_.isNil(response.data) === false)
+                me.trainers = response.data;
+            defer.resolve(me.trainers);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
+
         return defer.promise;
     }
 
     me.addTrainer = function (newTrainer) {
         var defer = $q.defer()
 
-        setTimeout(function () {
-            if (_.isNil(me.trainers)) {
-                me.trainers = []
-                defer.resolve(me.trainers);
-            }
+        $http.post(
+            accountUrl,
+            newTrainer
+        ).then(function successCallback(response) {
+            if (_.isNil(response.data) === false)
+                me.trainers.push(response.data);
 
-            newTrainer.id = _.random(100000, 999999);
-            me.trainers.push(newTrainer);
+            defer.resolve(me.practicer);
+        }, function errorCallback(response) {
+            defer.reject(response);
+        });
 
-        }, 500);
 
         return defer.promise;
     }
@@ -65,17 +58,25 @@ app.service('trainerService', ['$http', '$q', function ($http, $q) {
     me.getTrainer = function (id) {
         var defer = $q.defer()
 
-        setTimeout(function () {
-            if (_.isNil(me.trainers)) {
-                defer.resolve(null);
-            }
-            var index = _.findIndex(me.trainers, function (t) { return t.id = id; });
-            if (index >= 0) {
-                defer.resolve(me.trainers[index]);
-            }
-            defer.resolve(null);
-
-        }, 500);
+        var index = _.findIndex(me.trainers, function (t) { return t.id = id; });
+        if (index < 0) {
+            $http({
+                method: 'GET',
+                url: accountUrl + '/' + id
+            }).then(function successCallback(response) {
+                if (_.isNil(response.data) === false) {
+                    me.trainers.push(data);
+                    defer.resolve(response.data);
+                }
+                defer.reject(me.practicer);
+            }, function errorCallback(response) {
+                defer.reject(response);
+            });
+        }
+        else {
+            defer.resolve(me.trainers[index]);
+        }
+        defer.resolve(null);
 
         return defer.promise;
     }
@@ -96,11 +97,7 @@ app.service('trainerService', ['$http', '$q', function ($http, $q) {
         return me.getTrainerSchedule(trainerSchedule.trainerId); 
     }
 
-
-    me.populateTrainerSchedule = function () {
-
-    }
-
+    
     me.initialize();
 
 }])
