@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticWeb", "StaticWeb\Stat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.Messages.Tests", "Pilates.Messages.Tests\Pilates.Messages.Tests.csproj", "{CAF0380A-DD28-4771-B748-B81DCBE70DE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pilates.APIGateway", "Pilates.APIGateway\Pilates.APIGateway.csproj", "{BF1C0F4D-AF97-4C46-B1F1-22F12595DB80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{CAF0380A-DD28-4771-B748-B81DCBE70DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAF0380A-DD28-4771-B748-B81DCBE70DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAF0380A-DD28-4771-B748-B81DCBE70DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF1C0F4D-AF97-4C46-B1F1-22F12595DB80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1C0F4D-AF97-4C46-B1F1-22F12595DB80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF1C0F4D-AF97-4C46-B1F1-22F12595DB80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1C0F4D-AF97-4C46-B1F1-22F12595DB80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

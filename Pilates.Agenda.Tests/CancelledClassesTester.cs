@@ -37,7 +37,7 @@ namespace Pilates.Agenda.Tests
                 dateBegin = new DateTime(2017, 6, 1),
                 dateFinish = new DateTime(2017, 6, 7),
                 quantityOfMissedClasses = 1,
-                cancelledClassesId = this.cancelledClassesId
+                id = this.cancelledClassesId
             });
 
             var result = repo.GetAll().Result;
@@ -50,7 +50,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new CancelledClasses()
             {
-                cancelledClassesId = this.cancelledClassesId
+                id = this.cancelledClassesId
             });
 
             var data = await this.controller.Get(this.cancelledClassesId);
@@ -58,7 +58,7 @@ namespace Pilates.Agenda.Tests
             Assert.IsType<JsonResult>(data);
             JsonResult result = (JsonResult)data;
            
-            Assert.Equal(((CancelledClasses)result.Value).cancelledClassesId, this.cancelledClassesId);
+            Assert.Equal(((CancelledClasses)result.Value).id, this.cancelledClassesId);
 
         }
 
@@ -68,7 +68,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new CancelledClasses()
             {
-                cancelledClassesId = this.cancelledClassesId
+                id = this.cancelledClassesId
             });
 
             var data = await this.controller.Put(this.cancelledClassesId, new CancelledClasses()
@@ -77,13 +77,13 @@ namespace Pilates.Agenda.Tests
                 dateBegin = new DateTime(2017, 6, 1),
                 dateFinish = new DateTime(2017, 6, 7),
                 quantityOfMissedClasses = 1,
-                cancelledClassesId = this.cancelledClassesId
+                id = this.cancelledClassesId
             });
 
             CancelledClasses cancelledClasses = await repo.GetById(this.cancelledClassesId);
 
             Assert.NotNull(cancelledClasses.dateBegin);
-            Assert.Equal(cancelledClasses.cancelledClassesId, this.cancelledClassesId);
+            Assert.Equal(cancelledClasses.id, this.cancelledClassesId);
             JsonResult result = (JsonResult)data;
             
         }
@@ -94,7 +94,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new CancelledClasses()
             {
-                cancelledClassesId = this.cancelledClassesId
+                id = this.cancelledClassesId
             });
 
             await controller.Delete(this.cancelledClassesId);

@@ -33,17 +33,16 @@ namespace Pilates.Agenda.Tests
         {
             await controller.Post(new PracticerClasses()
             {
-                practicerClassesId = Guid.NewGuid(),
+                id = Guid.NewGuid(),
                 classes = new System.Collections.Generic.List<Class>()
                 {
                     new Class()
                     {
-                        classId = Guid.NewGuid(),
-                        dateBegin = new System.DateTime(2017, 1, 1),
-                        dateFinish = new System.DateTime(2018, 12, 31),
+                        id = Guid.NewGuid(),
+                        dayBegin = new System.DateTime(2017, 1, 1),
+                        dayEnd = new System.DateTime(2018, 12, 31),
                         dayOfWeek = System.DayOfWeek.Monday,
-                        maxPracticerSpots = 2,
-                        timeOfDay = new System.TimeSpan(7,0,0),
+                        timeOfDay = 7,
                         trainerId = Guid.NewGuid()
                     }
                 },
@@ -60,7 +59,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new PracticerClasses()
             {
-                practicerClassesId = this.practicerClassesId
+                id = this.practicerClassesId
             });
 
             var data = await this.controller.Get(this.practicerClassesId);
@@ -68,7 +67,7 @@ namespace Pilates.Agenda.Tests
             Assert.IsType<JsonResult>(data);
             JsonResult result = (JsonResult)data;
            
-            Assert.Equal(((PracticerClasses)result.Value).practicerClassesId, this.practicerClassesId);
+            Assert.Equal(((PracticerClasses)result.Value).id, this.practicerClassesId);
 
         }
 
@@ -78,22 +77,22 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new PracticerClasses()
             {
-                practicerClassesId = this.practicerClassesId
+                id = this.practicerClassesId
             });
 
             var data = await this.controller.Put(this.practicerClassesId, new PracticerClasses()
             {
-                practicerClassesId = this.practicerClassesId,
+                id = this.practicerClassesId,
                 classes = new System.Collections.Generic.List<Class>()
                 {
                     new Class()
                     {
-                        classId = Guid.NewGuid(),
-                        dateBegin = new System.DateTime(2017, 1, 1),
-                        dateFinish = new System.DateTime(2018, 12, 31),
+                        id = Guid.NewGuid(),
+                        dayBegin = new System.DateTime(2017, 1, 1),
+                        dayEnd = new System.DateTime(2018, 12, 31),
                         dayOfWeek = System.DayOfWeek.Monday,
-                        maxPracticerSpots = 2,
-                        timeOfDay = new System.TimeSpan(7,0,0),
+                        
+                        timeOfDay = 7,
                         trainerId = Guid.NewGuid()
                     }
                 },
@@ -104,7 +103,7 @@ namespace Pilates.Agenda.Tests
 
             Assert.NotEmpty(practicerClasses.classes);
             Assert.NotNull(practicerClasses.practicerId);
-            Assert.Equal(practicerClasses.practicerClassesId, this.practicerClassesId);
+            Assert.Equal(practicerClasses.id, this.practicerClassesId);
             JsonResult result = (JsonResult)data;
             
         }
@@ -115,7 +114,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new PracticerClasses()
             {
-                practicerClassesId = this.practicerClassesId
+                id = this.practicerClassesId
             });
 
             await controller.Delete(this.practicerClassesId);

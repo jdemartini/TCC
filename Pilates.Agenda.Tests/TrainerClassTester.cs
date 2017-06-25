@@ -38,7 +38,7 @@ namespace Pilates.Agenda.Tests
                 timeMinutesBegin = 0,
                 timesOfDay = new uint[] { 7, 8, 9, 10, 11, 12 },
                 trainerId = Guid.NewGuid(),
-                trainerScheduleId = this.trainerScheduleId
+                id = this.trainerScheduleId
             });
 
             var result = repo.GetAll().Result;
@@ -51,7 +51,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new TrainerSchedule()
             {
-                trainerScheduleId = this.trainerScheduleId
+                id = this.trainerScheduleId
             });
 
             var data = await this.controller.Get(this.trainerScheduleId);
@@ -59,7 +59,7 @@ namespace Pilates.Agenda.Tests
             Assert.IsType<JsonResult>(data);
             JsonResult result = (JsonResult)data;
            
-            Assert.Equal(((TrainerSchedule)result.Value).trainerScheduleId, this.trainerScheduleId);
+            Assert.Equal(((TrainerSchedule)result.Value).id, this.trainerScheduleId);
 
         }
 
@@ -69,7 +69,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new TrainerSchedule()
             {
-                trainerScheduleId = this.trainerScheduleId
+                id = this.trainerScheduleId
             });
 
             var data = await this.controller.Put(this.trainerScheduleId, new TrainerSchedule()
@@ -79,13 +79,13 @@ namespace Pilates.Agenda.Tests
                 timeMinutesBegin = 0,
                 timesOfDay = new uint[] { 7, 8, 9, 10, 11, 12 },
                 trainerId = Guid.NewGuid(),
-                trainerScheduleId = this.trainerScheduleId
+                id = this.trainerScheduleId
             });
 
             TrainerSchedule trainerSchedule = await repo.GetById(this.trainerScheduleId);
 
             Assert.NotNull(trainerSchedule.trainerId);
-            Assert.Equal(trainerSchedule.trainerScheduleId, this.trainerScheduleId);
+            Assert.Equal(trainerSchedule.id, this.trainerScheduleId);
             JsonResult result = (JsonResult)data;
             
         }
@@ -96,7 +96,7 @@ namespace Pilates.Agenda.Tests
             repo.Clear();
             await repo.Add(new TrainerSchedule()
             {
-                trainerScheduleId = this.trainerScheduleId
+                id = this.trainerScheduleId
             });
 
             await controller.Delete(this.trainerScheduleId);

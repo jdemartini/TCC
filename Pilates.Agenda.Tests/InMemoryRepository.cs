@@ -12,12 +12,12 @@ namespace Pilates.Agenda.Tests
         
         public Task<TEntity> Add(TEntity model)
         {
-            if (!model.getId().HasValue)
+            if (!model.id.HasValue)
             {
-                model.setId(Guid.NewGuid());
+                model.id = Guid.NewGuid();
             }
             // TODO: this is __NOT__ thread safe!
-            Data[model.getId().Value] = model;
+            Data[model.id.Value] = model;
             return Task.FromResult(model);
         }
 
