@@ -11,7 +11,17 @@ namespace Pilates.APIGateway
 
         public RequestRouteRepository()
         {
-            this.reRoutes = new RequestRouteTo[] { };
+            this.reRoutes = new RequestRouteTo[] {
+                new RequestRouteTo()
+                {
+                    APIOwner= "AgendaAPI",
+                    APIServiceEndPoint= "http://localhost:54250/api/PracticerClasses",
+                    APIServiceMethod = "Get",
+                    gatewayEndpointPath = new string[] { "practicerClasses" },
+                    gatewayMethod = "Get"
+                    
+                }
+            };
         }
 
         public RequestRouteTo getAPIRoute(string gatewayPath, string method)

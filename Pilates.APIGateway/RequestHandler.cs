@@ -13,7 +13,7 @@ namespace Pilates.APIGateway
         private HttpClient httpRequest;
         private object requestData;
         private string[] requestParams;
-        public RequestHandler(RequestRouteTo requestTo, string[] requestParams = null, object requestData = null)
+        internal RequestHandler(RequestRouteTo requestTo, string[] requestParams = null, object requestData = null)
         {
             this.requestTo = requestTo;
             this.httpRequest.BaseAddress = new Uri(requestTo.APIServiceEndPoint);
@@ -42,29 +42,50 @@ namespace Pilates.APIGateway
         {
             using (this.httpRequest = new HttpClient())
             {
-                StringBuilder urlPath = new StringBuilder(this.requestTo.APIServiceEndPoint);
-                for (var i = 0; i < this.requestTo.gatewayParams.Length; i++)
-                {
-                    urlPath.AppendFormat("/{0}", this.requestParams[i]);
-                }
+                StringBuilder urlPath = getUrlPath();
                 return this.httpRequest.DeleteAsync(urlPath.ToString());
             }
-                    
+
+        }
+
+        private StringBuilder getUrlPath()
+        {
+            StringBuilder urlPath = new StringBuilder(this.requestTo.APIServiceEndPoint);
+            for (var i = 0; i < this.requestTo.gatewayParams.Length; i++)
+            {
+                urlPath.AppendFormat("/{0}", this.requestParams[i]);
+            }
+
+            return urlPath;
         }
 
         private Task<HttpResponseMessage> executePut(object requestData)
         {
-            throw new NotImplementedException();
+            using (this.httpRequest = new HttpClient())
+            {
+                StringBuilder urlPath = getUrlPath();
+                HttpContent content = new StringContent(requestData.ToString());
+                return this.httpRequest.PutAsync(urlPath.ToString(), content);
+            }
         }
 
         private Task<HttpResponseMessage> executePost(object requestData)
         {
-            throw new NotImplementedException();
+            using (this.httpRequest = new HttpClient())
+            {
+                StringBuilder urlPath = getUrlPath();
+                HttpContent content = new StringContent(requestData.ToString());
+                return this.httpRequest.PostAsync(urlPath.ToString(), content);
+            }
         }
 
         private Task<HttpResponseMessage> executeGet()
         {
-            throw new NotImplementedException();
+            using (this.httpRequest = new HttpClient())
+            {
+                StringBuilder urlPath = getUrlPath();
+                return this.httpRequest.GetAsync(urlPath.ToString());
+            }
         }
     }
 }

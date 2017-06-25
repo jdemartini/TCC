@@ -6,18 +6,23 @@ namespace Pilates.APIGateway
     public class RequestMiddleware
     {
         private readonly RequestDelegate _next;
-
+        private RequestHandlerFactory reqFactory;
         public RequestMiddleware(RequestDelegate next)
         {
             _next = next;
+            this.reqFactory = new RequestHandlerFactory();
         }
 
         public Task Invoke(HttpContext context)
         {
-            var cultureQuery = context.Request.Query["culture"];
-
+            var reqHandler = reqFactory.getRequestHandler(
+                context.Request.Path,
+                context.Request.Method,
+                null,
+                context.Request.Body);
+             context.Request.Path
             // Call the next delegate/middleware in the pipeline
-            return context.Response.WriteAsync("Chegou aqui: " + cultureQuery);
+            return context.Response.WriteAsync(reqHandler.execute());
         }
         
     }
