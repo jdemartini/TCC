@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,10 +15,12 @@ namespace Pilates.APIGateway
             this.routeRepo = new RequestRouteRepository();
         }
 
-        public RequestHandler getRequestHandler(string path, string method, string[] gatewayParams = null, object data = null)
+        public RequestHandler getRequestHandler(HttpRequest request)
         {
-            RequestRouteTo route = this.routeRepo.getAPIRoute(path, method);
-            var result = new RequestHandler(route, gatewayParams, data);
+            var route = this.routeRepo.getAPIRoute(request.Path, request.Method);
+            if (route == null)
+                return null;
+            var result = new RequestHandler(route, request);
             return result;
         }
     }

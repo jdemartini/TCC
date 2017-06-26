@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,21 +10,38 @@ namespace Pilates.APIGateway
 {
     public class RequestHandler
     {
-        private RequestRouteTo requestTo;
-        private HttpClient httpRequest;
+        private RouteDefinition requestTo;
+        private string urlPath;
         private object requestData;
         private string[] requestParams;
-        internal RequestHandler(RequestRouteTo requestTo, string[] requestParams = null, object requestData = null)
+        internal RequestHandler(RouteDefinition requestTo, HttpRequest originalRequest)
         {
             this.requestTo = requestTo;
-            this.httpRequest.BaseAddress = new Uri(requestTo.APIServiceEndPoint);
-            this.requestData = requestData;
+            this.urlPath = requestTo.APITargetEndPoint.Trim().Trim('/') + this.getParams(originalRequest.Path);
+            this.requestData = originalRequest.Body;
             this.requestParams = requestParams ?? new string[] { };
+        }
+
+        private string getParams(PathString path)
+        {
+            string result = string.Empty;
+            if (this.requestTo.APITargetEndPointParams.Length > 0)
+            {
+                var urlParams = path.Value.Trim().Trim('/').Split('/');
+                int paramsCount = this.requestTo.gatewayEndpointPath.Length - this.requestTo.APITargetEndPointParams.Length;
+                for (int i = paramsCount; i < this.requestTo.gatewayEndpointPath.Length; i++)
+                {
+                    result = $"{result}/{this.requestTo.gatewayEndpointPath[i]}";
+                }
+            }
+
+            return result;
         }
 
         public Task<HttpResponseMessage> execute()
         {
-            switch (this.requestTo.APIServiceMethod)
+            
+            switch (this.requestTo.APITargetHTTPMethod)
             {
                 case "Get":
                     return this.executeGet();
@@ -40,51 +58,41 @@ namespace Pilates.APIGateway
 
         private Task<HttpResponseMessage> executeDelete(object requestData)
         {
-            using (this.httpRequest = new HttpClient())
+            using (HttpClient httpRequest = new HttpClient())
             {
-                StringBuilder urlPath = getUrlPath();
-                return this.httpRequest.DeleteAsync(urlPath.ToString());
+                httpRequest.BaseAddress = new Uri(this.urlPath);
+                return httpRequest.DeleteAsync(urlPath.ToString());
             }
 
         }
-
-        private StringBuilder getUrlPath()
-        {
-            StringBuilder urlPath = new StringBuilder(this.requestTo.APIServiceEndPoint);
-            for (var i = 0; i < this.requestTo.gatewayParams.Length; i++)
-            {
-                urlPath.AppendFormat("/{0}", this.requestParams[i]);
-            }
-
-            return urlPath;
-        }
-
+        
         private Task<HttpResponseMessage> executePut(object requestData)
         {
-            using (this.httpRequest = new HttpClient())
+            using (HttpClient httpRequest = new HttpClient())
             {
-                StringBuilder urlPath = getUrlPath();
+
+                httpRequest.BaseAddress = new Uri(this.urlPath);
                 HttpContent content = new StringContent(requestData.ToString());
-                return this.httpRequest.PutAsync(urlPath.ToString(), content);
+                return httpRequest.PutAsync(urlPath.ToString(), content);
             }
         }
 
         private Task<HttpResponseMessage> executePost(object requestData)
         {
-            using (this.httpRequest = new HttpClient())
+            using (var httpRequest = new HttpClient())
             {
-                StringBuilder urlPath = getUrlPath();
+                httpRequest.BaseAddress = new Uri(this.urlPath);
                 HttpContent content = new StringContent(requestData.ToString());
-                return this.httpRequest.PostAsync(urlPath.ToString(), content);
+                return httpRequest.PostAsync(urlPath.ToString(), content);
             }
         }
 
         private Task<HttpResponseMessage> executeGet()
         {
-            using (this.httpRequest = new HttpClient())
+            using (var httpRequest = new HttpClient())
             {
-                StringBuilder urlPath = getUrlPath();
-                return this.httpRequest.GetAsync(urlPath.ToString());
+                httpRequest.BaseAddress = new Uri(this.urlPath);
+                return httpRequest.GetAsync(urlPath.ToString());
             }
         }
     }

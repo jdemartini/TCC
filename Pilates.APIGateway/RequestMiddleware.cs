@@ -15,14 +15,11 @@ namespace Pilates.APIGateway
 
         public Task Invoke(HttpContext context)
         {
-            var reqHandler = reqFactory.getRequestHandler(
-                context.Request.Path,
-                context.Request.Method,
-                null,
-                context.Request.Body);
-             context.Request.Path
+            var reqHandler = reqFactory.getRequestHandler(context.Request);
+            if (reqHandler == null)
+                return context.Response.WriteAsync("Invalid path");
             // Call the next delegate/middleware in the pipeline
-            return context.Response.WriteAsync(reqHandler.execute());
+            return reqHandler.execute();
         }
         
     }

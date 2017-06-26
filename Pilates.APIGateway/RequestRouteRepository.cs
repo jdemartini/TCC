@@ -7,32 +7,30 @@ namespace Pilates.APIGateway
 {
     public class RequestRouteRepository
     {
-        private RequestRouteTo[] reRoutes;
+        private RouteDefinition[] reRoutes;
 
         public RequestRouteRepository()
         {
-            this.reRoutes = new RequestRouteTo[] {
-                new RequestRouteTo()
+            this.reRoutes = new RouteDefinition[] {
+                new RouteDefinition()
                 {
                     APIOwner= "AgendaAPI",
-                    APIServiceEndPoint= "http://localhost:54250/api/PracticerClasses",
-                    APIServiceMethod = "Get",
-                    gatewayEndpointPath = new string[] { "practicerClasses" },
+                    APITargetEndPoint= "http://localhost:54250/api/PracticerClasses",
+                    APITargetHTTPMethod = "Get",
+                    gatewayEndpointPath = new string[] { "api", "practicerClasses" },
                     gatewayMethod = "Get"
                     
                 }
             };
         }
 
-        public RequestRouteTo getAPIRoute(string gatewayPath, string method)
+        public RouteDefinition getAPIRoute(string gatewayPath, string method)
         {
-            RequestRouteTo result = null;
-
             var r = from route in this.reRoutes
-                    where route.isTheRoute(gatewayPath.Trim().Trim('/').Split('/'), method)
+                    where route.routeMatch(gatewayPath, method)
                     select route;
 
-            return result;
+            return r.FirstOrDefault();
         }
     }
 }
