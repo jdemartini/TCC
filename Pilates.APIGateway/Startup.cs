@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Pilates.ServiceDiscovery;
+using Consul;
 
 namespace Pilates.APIGateway
 {
@@ -32,7 +34,15 @@ namespace Pilates.APIGateway
             // Add framework services.
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling =
                                                             Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            // ********************
+            // Service Discovery
+            // ********************
+            services.Configure<ConsulConfig>(Configuration.GetSection("consulConfig"));
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                var address = Configuration["consulConfig:address"];
+                consulConfig.Address = new Uri(address);
+            }));
             // ********************
             // Setup CORS
             // ********************
@@ -56,7 +66,7 @@ namespace Pilates.APIGateway
             loggerFactory.AddDebug();
             app.UseCors("SiteCorsPolicy");
 
-            app.UseRequestMiddleware();
+            app.UseRequestMiddleware(Configuration["consulConfig:address"]);
 
             app.Run(async context =>
             {

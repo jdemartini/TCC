@@ -9,10 +9,12 @@ namespace Pilates.APIGateway
     public class RequestHandlerFactory
     {
         private RequestRouteRepository routeRepo;
+        private ServiceDiscovery serviceDiscovery;
 
-        public RequestHandlerFactory()
+        public RequestHandlerFactory(ServiceDiscovery serviceDiscovery)
         {
             this.routeRepo = new RequestRouteRepository();
+            this.serviceDiscovery = serviceDiscovery;
         }
 
         public RequestHandler getRequestHandler(HttpRequest request)
@@ -20,7 +22,7 @@ namespace Pilates.APIGateway
             var route = this.routeRepo.getAPIRoute(request.Path, request.Method);
             if (route == null)
                 return null;
-            var result = new RequestHandler(route, request);
+            var result = new RequestHandler(route, serviceDiscovery.getServiceUrl(route.APIOwner), request);
             return result;
         }
     }

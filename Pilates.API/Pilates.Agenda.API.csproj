@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pilates.Data\Pilates.Agenda.Data.csproj" />
     <ProjectReference Include="..\Pilates.Domain\Pilates.Agenda.Domain.csproj" />
+    <ProjectReference Include="..\Pilates.ServiceDiscovery\Pilates.ServiceDiscovery.csproj" />
   </ItemGroup>
 
 </Project>

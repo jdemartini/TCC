@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Consul;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pilates.Data.Repos;
 using Pilates.Domain.Interfaces;
+using Pilates.ServiceDiscovery;
+using System;
 
 namespace Pilates.API
 {
@@ -29,7 +32,15 @@ namespace Pilates.API
             // Add framework services.
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling =
                                                             Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            // ********************
+            // Service Discovery
+            // ********************
+            services.Configure<ConsulConfig>(Configuration.GetSection("consulConfig"));
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                var address = Configuration["consulConfig:address"];
+                consulConfig.Address = new Uri(address);
+            }));
             // ********************
             // Setup CORS
             // ********************
@@ -48,27 +59,14 @@ namespace Pilates.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             app.UseCors("SiteCorsPolicy");
 
             app.UseMvc();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
-            app.UseStaticFiles();
-
-
-                       
+            app.RegisterWithConsul(lifetime);
         }
     }
 }

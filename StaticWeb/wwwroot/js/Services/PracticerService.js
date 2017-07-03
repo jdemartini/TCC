@@ -1,8 +1,8 @@
 ﻿var app = angular.module('PilatesApp');
 
 app.service('practicerService', ['$http', '$q', function ($http, $q) {
-    var accountUrl = 'http://localhost:51014/api';
-    var agendaUrl = 'http://localhost:54250/api';
+    var accountUrl = 'http://localhost:63998/api';
+    var agendaUrl = 'http://localhost:63998/api';
     var me = this;
     me.initialize = function() {
         me.practicer = [];

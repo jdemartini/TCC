@@ -26,10 +26,14 @@ namespace Pilates.APIGateway
         internal bool routeMatch(string gatewayRequestPath, string method)
         {
             var path = gatewayRequestPath.Trim().Trim('/').Split('/');
+
+            if (this.gatewayMethod.Equals(method, StringComparison.CurrentCultureIgnoreCase) == false)
+                return false;
+
             if (path.Length != gatewayEndpointPath.Length + gatewayParams.Length)
                 return false;
 
-            for(int i = 0; i < gatewayEndpointPath.Length; i++)
+            for (int i = 0; i < gatewayEndpointPath.Length; i++)
             {
                 if (gatewayEndpointPath[i].Equals(path[i], StringComparison.CurrentCultureIgnoreCase) == false)
                     return false;

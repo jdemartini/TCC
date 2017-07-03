@@ -2,8 +2,8 @@
 
 app.service('trainerService', ['$http', '$q', function ($http, $q) {
     var me = this;
-    var accountUrl = 'http://localhost:51014/api/Trainer';
-    var agendaUrl = 'http://localhost:54250/api/TrainerSchedule';
+    var accountUrl = 'http://localhost:63998/api/Trainer';
+    var agendaUrl = 'http://localhost:63998/api/TrainerSchedule';
     me.initialize = function() {
         me.trainers = [];
         /*
